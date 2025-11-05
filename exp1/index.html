@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration and Login</title>
+</head>
+<body>
+
+<div id="registerForm">
+    <h2>Register</h2>
+    <form onsubmit="registerUser(event)">
+        <label for="event">Select Event Type:</label>
+        <select id="event" required>
+            <option value="">-- Select Event --</option>
+            <option value="Workshop">Workshop</option>
+            <option value="Seminar">Seminar</option>
+            <option value="Webinar">Webinar</option>
+        </select>
+        <br>
+        <input type="text" id="regName" placeholder="Full Name" required><br>
+        <input type="email" id="regEmail" placeholder="Email" required><br>
+        <input type="text" id="regUsername" placeholder="Username" required><br>
+        <input type="password" id="regPassword" placeholder="Password" required><br>
+        <input type="submit" value="Register">
+    </form>
+</div>
+
+<div id="loginForm" style="display: none;">
+    <h2>Login</h2>
+    <form onsubmit="loginUser(event)">
+        <input type="text" id="loginUsername" placeholder="Username" required><br>
+        <input type="password" id="loginPassword" placeholder="Password" required><br>
+        <input type="submit" value="Login">
+    </form>
+</div>
+
+<div id="message"></div>
+
+<script>
+    function registerUser(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("regName").value;
+        const email = document.getElementById("regEmail").value;
+        const username = document.getElementById("regUsername").value;
+        const password = document.getElementById("regPassword").value;
+
+        // Save data to localStorage
+        localStorage.setItem("registeredUsername", username);
+        localStorage.setItem("registeredPassword", password);
+
+        // Show login form
+        document.getElementById("registerForm").style.display = "none";
+        document.getElementById("loginForm").style.display = "block";
+    }
+
+    function loginUser(event) {
+        event.preventDefault();
+
+        const enteredUsername = document.getElementById("loginUsername").value;
+        const enteredPassword = document.getElementById("loginPassword").value;
+
+        const savedUsername = localStorage.getItem("registeredUsername");
+        const savedPassword = localStorage.getItem("registeredPassword");
+
+        if (enteredUsername === savedUsername && enteredPassword === savedPassword) {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("message").innerText = "🎉 Login successful! Welcome, " + savedUsername;
+            document.getElementById("message").style.color = "green";
+        } else {
+            document.getElementById("message").innerText = "Invalid username or password!";
+            document.getElementById("message").style.color = "red";
+        }
+    }
+</script>
+
+</body>
+</html>

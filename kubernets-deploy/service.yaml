@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-java-app-service
+spec:
+  selector:
+    app: my-java-app
+  ports:
+    - protocol: TCP
+      port: 80          # Port exposed inside the cluster
+      targetPort: 8080  # Port your Java app is running on
+      nodePort: 30007   # External port
+  type: NodePort
